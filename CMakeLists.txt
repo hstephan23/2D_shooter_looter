@@ -9,7 +9,7 @@ link_directories(/opt/homebrew/lib)
 find_library(RAYLIB raylib HINTS /opt/homebrew/lib)
 
 #add_subdirectory(EngineRoot/Engine/Audio)
-add_subdirectory(EngineRoot/Engine/core)
+add_subdirectory(EngineRoot/Engine/Core)
 #add_subdirectory(EngineRoot/Engine/ECS)
 #add_subdirectory(EngineRoot/Engine/Physics)
 #add_subdirectory(EngineRoot/Engine/Platform)
