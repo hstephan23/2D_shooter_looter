@@ -1,5 +1,8 @@
 add_library(core STATIC
         src/startup.cpp
+        src/aiming.cpp
+        src/bullet_system.cpp
+        src/rendering.cpp
 )
 
 target_include_directories(core PUBLIC
