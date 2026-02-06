@@ -13,19 +13,23 @@ void spawn_bullet(
     const float delta_time
     )
 {
-    player.fire_cooldown -= delta_time;
-    if (player.fire_cooldown <= 0.0f)
+    // This controls auto-fire as well (just hold left-click on the mouse)
+    if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) || IsMouseButtonDown(MOUSE_BUTTON_LEFT))
     {
-        for (auto & [position, velocity, lifetime, active] : bullets)
+        player.fire_cooldown -= delta_time;
+        if (player.fire_cooldown <= 0.0f)
         {
-            if (!active)
+            for (auto & [position, velocity, lifetime, active] : bullets)
             {
-                position = muzzle_position;
-                velocity = Vector2Scale(aim_direction, player.bullet_speed);
-                active = true;
-                lifetime = 4.0f;
-                player.fire_cooldown = 1.0f / player.fire_rate;
-                break;
+                if (!active)
+                {
+                    position = muzzle_position;
+                    velocity = Vector2Scale(aim_direction, player.bullet_speed);
+                    active = true;
+                    lifetime = 4.0f;
+                    player.fire_cooldown = 1.0f / player.fire_rate;
+                    break;
+                }
             }
         }
     }

@@ -13,6 +13,8 @@ struct Player
     float bullet_damage;
     float fire_rate;
     float fire_cooldown;
+    float dash_cooldown;
 };
 
-void player_move(Player &player, float delta_time);
+void player_move(Player &player, float delta_time, float speed);
+void player_dash(Player &player, float delta_time);
