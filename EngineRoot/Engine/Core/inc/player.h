@@ -4,7 +4,6 @@
 
 
 // TODO: These will change with power ups in the future
-// TODO: Should we move the player on the existing map? Or move the map behind them??
 
 struct Player
 {
@@ -15,3 +14,5 @@ struct Player
     float fire_rate;
     float fire_cooldown;
 };
+
+void player_move(Player &player, float delta_time);

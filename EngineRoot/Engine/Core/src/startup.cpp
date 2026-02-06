@@ -3,6 +3,7 @@
 #include <array>
 
 #include "startup.h"
+
 #include "player.h"
 #include "aiming.h"
 #include "bullet_system.h"
@@ -16,7 +17,7 @@ void startup()
     Player player = {
         .position = Vector2{400, 300},
         .health = 100.0f,
-        .bullet_speed = 100.0f,
+        .bullet_speed = 150.0f,
         .bullet_damage = 10.0f,
         .fire_rate = 6.0f,
         .fire_cooldown = 0.0f,
@@ -42,6 +43,7 @@ void startup()
                delta_time
            );
         }
+        player_move(player, delta_time);
 
         update_bullets(bullets, delta_time);
         render(bullets, player.position, gun_position, MAX_BULLETS);
