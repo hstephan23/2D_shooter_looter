@@ -12,16 +12,17 @@
 void startup()
 {
     InitWindow(1000, 800, "Game_Engine");
+    SetTargetFPS(120);
     constexpr int MAX_BULLETS = 12;
     std::array<Bullet, MAX_BULLETS> bullets = {};
     Player player = {
         .position = Vector2{500, 400},
-        .health = 100.0f,
         .bullet_speed = 150.0f,
         .bullet_damage = 10.0f,
         .fire_rate = 6.0f,
         .fire_cooldown = 0.0f,
         .dash_cooldown = 0.0f,
+        .health = 3,
     };
     while (!WindowShouldClose())
     {
@@ -37,7 +38,7 @@ void startup()
         player_move(player, delta_time, 100.0f);
         player_dash(player, delta_time);
         update_bullets(bullets, delta_time);
-        render(bullets, player.position, gun_position, MAX_BULLETS);
+        render(bullets, player, gun_position, MAX_BULLETS);
     }
 
     CloseWindow();
