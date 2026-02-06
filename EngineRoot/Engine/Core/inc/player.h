@@ -8,12 +8,12 @@
 struct Player
 {
     Vector2 position;
-    float health;
     float bullet_speed;
     float bullet_damage;
     float fire_rate;
     float fire_cooldown;
     float dash_cooldown;
+    int health;
 };
 
 void player_move(Player &player, float delta_time, float speed);

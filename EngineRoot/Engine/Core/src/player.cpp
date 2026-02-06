@@ -44,9 +44,10 @@ void player_move(Player &player, const float delta_time, const float speed)
 void player_dash(Player &player, const float delta_time)
 {
     player.dash_cooldown -= delta_time;
+    if (player.dash_cooldown < 0.0f) player.dash_cooldown = 0.0f;
     if (IsKeyPressed(KEY_SPACE) && player.dash_cooldown <= 0.0f)
     {
         player_move(player, 2.0f, 20.0f);
-        player.dash_cooldown = 5.0f;
+        player.dash_cooldown = 2.0f;
     }
 }
