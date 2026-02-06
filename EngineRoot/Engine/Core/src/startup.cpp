@@ -24,15 +24,15 @@ void startup()
         .dash_cooldown = 0.0f,
         .health = 3,
     };
+
     while (!WindowShouldClose())
     {
         if (IsKeyPressed(KEY_ESCAPE)) break;
 
+        const float delta_time = GetFrameTime();
         const auto aim_direction = compute_aim_direction(player.position);
         const auto gun_position = compute_gun_position(player.position, aim_direction);
         const auto muzzle_position = compute_muzzle_position(gun_position, aim_direction);
-
-        const float delta_time = GetFrameTime();
 
         spawn_bullet(bullets,player,muzzle_position, aim_direction, delta_time);
         player_move(player, delta_time, 100.0f);
