@@ -10,8 +10,7 @@
 
 void render(
     const std::span<Bullet> bullets,
-    const std::span<Monster> grunts,
-    const std::span<Monster> shooters,
+    const std::span<Monster> monsters,
     const Player& player,
     const Vector2 gun_position,
     const int MAX_BULLETS
@@ -42,19 +41,27 @@ void render(
     DrawRectangle(170, 115, static_cast<int>(dash_ratio * dash_bar_width), 15, ORANGE);
 
     DrawText(TextFormat("Bullets Remaining: %d", count_active_bullets(bullets, MAX_BULLETS)), 10, 85, 20, BLACK);
-    for (const auto & grunt: grunts)
+    for (const auto & monster: monsters)
     {
         // TODO: make this look nicer?
-        DrawTriangle(Vector2Add(grunt.position, Vector2(25, 0)),
-            Vector2Add(grunt.position, Vector2(0, 25)),
-            Vector2Add(grunt.position, Vector2(25, 25)), DARKGREEN);
-    }
-    for (const auto & shooter : shooters)
-    {
-        // TODO: make this look nicer?
-        DrawTriangle(Vector2Add(shooter.position, Vector2(25,0)),
-            Vector2Add(shooter.position, Vector2(0, 25)),
-            Vector2Add(shooter.position, Vector2(25, 25)), DARKPURPLE);
+        switch (monster.type)
+        {
+            case MonsterType::Grunt:
+                DrawCircleV(monster.position, 20, BLUE);
+                break;
+            case MonsterType::Shooter:
+                DrawCircleV(monster.position, 20, DARKPURPLE);
+                break;
+            case MonsterType::Dasher:
+                DrawCircleV(monster.position, 20, GOLD);
+                break;
+            case MonsterType::Turret:
+                DrawCircleV(monster.position, 20, LIME);
+                break;
+            default:
+                break;
+        }
+
     }
     EndDrawing();
 }

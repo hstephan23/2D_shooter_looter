@@ -9,7 +9,9 @@ enum class MonsterType
     Grunt,
     Shooter,
     Dasher,
-    Turret
+    Turret,
+
+    COUNT
 };
 
 struct Monster
@@ -20,7 +22,11 @@ struct Monster
     float health;
 };
 
-void move_grunt(Monster &grunt, const Player &player, float delta_time);
+void move_monster(Monster &monster, const Player &player, float delta_time);
+
 Monster create_grunt(Vector2 position);
-void move_shooter(Monster &shooter, const Player &player, float delta_time);
 Monster create_shooter(Vector2 position);
+Monster create_dasher(Vector2 position);
+Monster create_turret(Vector2 position);
+
+MonsterType random_monster_type();

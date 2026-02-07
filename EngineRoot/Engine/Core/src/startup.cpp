@@ -15,8 +15,7 @@ void startup()
     InitWindow(1000, 800, "Game_Engine");
     SetTargetFPS(120);
     constexpr int MAX_BULLETS = 12;
-    constexpr int MAX_GRUNTS = 3;
-    constexpr int MAX_SHOOTERS = 2;
+    constexpr int MAX_MONSTERS = 10;
     std::array<Bullet, MAX_BULLETS> bullets = {};
     Player player = {
         .position = Vector2{500, 400},
@@ -28,21 +27,26 @@ void startup()
         .speed = 100.0f,
         .health = 3,
     };
-
-    std::array<Monster, MAX_GRUNTS> grunts = {};
-    for (int i = 0; i < MAX_GRUNTS; i++)
+    std::array<Monster, MAX_MONSTERS> monsters = {};
+    for (int i = 0; i < MAX_MONSTERS; i++)
     {
-        grunts[i] = create_grunt(Vector2{100.0f + static_cast<float>(i) * 100.0f, 200.0f});
-    }
+        switch (MonsterType type = random_monster_type())
+        {
+        case MonsterType::Grunt:
+            monsters[i] = create_grunt(Vector2{100.0f + static_cast<float>(i) * 100.0f, 100.0f});
+            break;
+        case MonsterType::Shooter:
+            monsters[i] = create_shooter(Vector2{100.0f + static_cast<float>(i) * 100.0f, 200.0f});
+            break;
+        case MonsterType::Dasher:
+            monsters[i] = create_dasher(Vector2{100.0f + static_cast<float>(i) * 100.0f, 300.0f});
+        case MonsterType::Turret:
+            monsters[i] = create_turret(Vector2{100.0f + static_cast<float>(i) * 100.0f, 400.0f});
+        default:
+            break;
+        }
 
-    std::array<Monster, MAX_SHOOTERS> shooters = {};
-    for (int i = 0; i < MAX_SHOOTERS; i++)
-    {
-        shooters[i] = create_shooter(Vector2{100.0f + static_cast<float>(i) * 100.0f, 300.0f});
     }
-    // Monster shooter = {};
-    // Monster dasher = {};
-    // Monster turret = {};
 
     while (!WindowShouldClose())
     {
@@ -55,11 +59,10 @@ void startup()
 
         spawn_bullet(bullets,player,muzzle_position, aim_direction, delta_time);
         player_move(player, delta_time, player.speed);
-        for (auto & grunt : grunts) move_grunt(grunt, player, delta_time);
-        for (auto & shooter : shooters) move_shooter(shooter, player, delta_time);
+        for (auto & monster : monsters) move_monster(monster, player, delta_time);
         player_dash(player, delta_time);
         update_bullets(bullets, delta_time);
-        render(bullets, grunts, shooters, player, gun_position, MAX_BULLETS);
+        render(bullets, monsters, player, gun_position, MAX_BULLETS);
     }
 
     CloseWindow();
