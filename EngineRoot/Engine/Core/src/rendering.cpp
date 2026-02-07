@@ -1,11 +1,16 @@
 #include <span>
+
 #include "raylib.h"
+#include "raymath.h"
 
 #include "rendering.h"
+#include "player.h"
+#include "monster.h"
 #include "bullet_system.h"
 
 void render(
     const std::span<Bullet> bullets,
+    const std::span<Monster> monsters,
     const Player& player,
     const Vector2 gun_position,
     const int MAX_BULLETS
@@ -15,7 +20,7 @@ void render(
     ClearBackground(RAYWHITE);
 
     DrawFPS(10,10);
-    
+
     DrawCircleV(player.position, 20, RED);
     DrawCircleV(gun_position, 5, BLACK);
 
@@ -36,6 +41,27 @@ void render(
     DrawRectangle(170, 115, static_cast<int>(dash_ratio * dash_bar_width), 15, ORANGE);
 
     DrawText(TextFormat("Bullets Remaining: %d", count_active_bullets(bullets, MAX_BULLETS)), 10, 85, 20, BLACK);
+    for (const auto & monster: monsters)
+    {
+        // TODO: make this look nicer?
+        switch (monster.type)
+        {
+            case MonsterType::Grunt:
+                DrawCircleV(monster.position, 20, BLUE);
+                break;
+            case MonsterType::Shooter:
+                DrawCircleV(monster.position, 20, DARKPURPLE);
+                break;
+            case MonsterType::Dasher:
+                DrawCircleV(monster.position, 20, GOLD);
+                break;
+            case MonsterType::Turret:
+                DrawCircleV(monster.position, 20, LIME);
+                break;
+            default:
+                break;
+        }
 
+    }
     EndDrawing();
 }

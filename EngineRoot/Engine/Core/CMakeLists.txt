@@ -1,7 +1,8 @@
 add_library(core STATIC
         src/aiming.cpp
-        src/player.cpp
         src/bullet_system.cpp
+        src/monster.cpp
+        src/player.cpp
         src/rendering.cpp
         src/startup.cpp
 )

@@ -13,6 +13,7 @@ struct Player
     float fire_rate;
     float fire_cooldown;
     float dash_cooldown;
+    float speed;
     int health;
 };
 
