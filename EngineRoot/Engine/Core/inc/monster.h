@@ -22,4 +22,5 @@ struct Monster
 
 void move_grunt(Monster &grunt, const Player &player, float delta_time);
 Monster create_grunt(Vector2 position);
-
+void move_shooter(Monster &shooter, const Player &player, float delta_time);
+Monster create_shooter(Vector2 position);

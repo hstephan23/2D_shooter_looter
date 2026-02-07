@@ -11,6 +11,7 @@
 void render(
     const std::span<Bullet> bullets,
     const std::span<Monster> grunts,
+    const std::span<Monster> shooters,
     const Player& player,
     const Vector2 gun_position,
     const int MAX_BULLETS
@@ -43,9 +44,17 @@ void render(
     DrawText(TextFormat("Bullets Remaining: %d", count_active_bullets(bullets, MAX_BULLETS)), 10, 85, 20, BLACK);
     for (const auto & grunt: grunts)
     {
+        // TODO: make this look nicer?
         DrawTriangle(Vector2Add(grunt.position, Vector2(25, 0)),
             Vector2Add(grunt.position, Vector2(0, 25)),
             Vector2Add(grunt.position, Vector2(25, 25)), DARKGREEN);
+    }
+    for (const auto & shooter : shooters)
+    {
+        // TODO: make this look nicer?
+        DrawTriangle(Vector2Add(shooter.position, Vector2(25,0)),
+            Vector2Add(shooter.position, Vector2(0, 25)),
+            Vector2Add(shooter.position, Vector2(25, 25)), DARKPURPLE);
     }
     EndDrawing();
 }

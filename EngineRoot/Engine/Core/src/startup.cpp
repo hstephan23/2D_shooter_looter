@@ -16,6 +16,7 @@ void startup()
     SetTargetFPS(120);
     constexpr int MAX_BULLETS = 12;
     constexpr int MAX_GRUNTS = 3;
+    constexpr int MAX_SHOOTERS = 2;
     std::array<Bullet, MAX_BULLETS> bullets = {};
     Player player = {
         .position = Vector2{500, 400},
@@ -24,21 +25,22 @@ void startup()
         .fire_rate = 6.0f,
         .fire_cooldown = 0.0f,
         .dash_cooldown = 0.0f,
+        .speed = 100.0f,
         .health = 3,
     };
 
     std::array<Monster, MAX_GRUNTS> grunts = {};
-    for (int i = 0; i < MAX_GRUNTS; ++i)
+    for (int i = 0; i < MAX_GRUNTS; i++)
     {
         grunts[i] = create_grunt(Vector2{100.0f + static_cast<float>(i) * 100.0f, 200.0f});
     }
 
+    std::array<Monster, MAX_SHOOTERS> shooters = {};
+    for (int i = 0; i < MAX_SHOOTERS; i++)
+    {
+        shooters[i] = create_shooter(Vector2{100.0f + static_cast<float>(i) * 100.0f, 300.0f});
+    }
     // Monster shooter = {};
-    //     // .position = Vector2{300, 300},
-    //     // .type = MonsterType::Shooter,
-    //     // .speed = 100.0f,
-    //     // .health = 10.0f,
-    //
     // Monster dasher = {};
     // Monster turret = {};
 
@@ -52,11 +54,12 @@ void startup()
         const auto muzzle_position = compute_muzzle_position(gun_position, aim_direction);
 
         spawn_bullet(bullets,player,muzzle_position, aim_direction, delta_time);
-        player_move(player, delta_time, 100.0f);
+        player_move(player, delta_time, player.speed);
         for (auto & grunt : grunts) move_grunt(grunt, player, delta_time);
+        for (auto & shooter : shooters) move_shooter(shooter, player, delta_time);
         player_dash(player, delta_time);
         update_bullets(bullets, delta_time);
-        render(bullets, grunts, player, gun_position, MAX_BULLETS);
+        render(bullets, grunts, shooters, player, gun_position, MAX_BULLETS);
     }
 
     CloseWindow();
