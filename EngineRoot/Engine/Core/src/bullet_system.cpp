@@ -38,7 +38,7 @@ void update_bullets(std::span<Bullet> bullets, const float delta_time){
     for (auto & [position, velocity, lifetime, active] : bullets)
     {
         if (!active) continue;
-
+        // velocity is distance / time, so this results in distance traveled in the last frame
         position.x += velocity.x * delta_time;
         position.y += velocity.y * delta_time;
         lifetime -= delta_time;
