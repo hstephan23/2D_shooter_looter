@@ -6,7 +6,16 @@
 #include "monster.h"
 #include "player.h"
 
-void move(Monster & monster, const Player &player, const float delta_time);
+/** @brief move the monster towards character
+ *
+ * This is pulled out for reuse
+ *
+ * @param [in] monster the information of the monster type and speed
+ * @param [out] monster the updated position of the monster
+ * @param [in] player the position of the player
+ * @param [in] delta_time the time since the last frame was drawn
+ */
+void move(Monster &monster, const Player &player, const float delta_time);
 
 void move_monster(Monster &monster, const Player &player, const float delta_time)
 {
@@ -27,12 +36,12 @@ void move_monster(Monster &monster, const Player &player, const float delta_time
         }
     } else if (monster.type == MonsterType::Dasher)
     {
-        if (distance <= 350.0f)
+        if (distance <= 300.0f)
         {
             move(monster, player, delta_time);
         }
     }
-    // Turret DOES not move, so we don't need to add logic for it 
+    // Turret DOES not move, so we don't need to add else if for it
 }
 
 Monster create_grunt(const Vector2 position)
@@ -41,7 +50,7 @@ Monster create_grunt(const Vector2 position)
         .position = position,
         .type = MonsterType::Grunt,
         .speed = 50.0f,
-        .health = 30.0f
+        .health = 35.0f
     };
 }
 
@@ -61,7 +70,7 @@ Monster create_dasher(const Vector2 position)
         .position = position,
         .type = MonsterType::Dasher,
         .speed = 80.0f,
-        .health = 40.0f,
+        .health = 25.0f,
     };
 }
 
@@ -74,6 +83,15 @@ Monster create_turret(const Vector2 position)
         .health = 100.0f
     };
 }
+
+MonsterType random_monster_type()
+{
+    static std::mt19937 rng(std::random_device{}());
+    std::uniform_int_distribution<int> dist(0, static_cast<int>(MonsterType::COUNT) - 1);
+
+    return static_cast<MonsterType>(dist(rng));
+}
+
 void move(Monster & monster, const Player &player, const float delta_time)
 {
 
@@ -92,12 +110,4 @@ void move(Monster & monster, const Player &player, const float delta_time)
     {
         monster.position.y -= monster.speed * delta_time;
     }
-}
-
-MonsterType random_monster_type()
-{
-    static std::mt19937 rng(std::random_device{}());
-    std::uniform_int_distribution<int> dist(0, static_cast<int>(MonsterType::COUNT) - 1);
-
-    return static_cast<MonsterType>(dist(rng));
 }

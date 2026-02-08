@@ -14,8 +14,8 @@ Vector2 compute_gun_position(const Vector2 player_position, const Vector2 aim_di
     return Vector2Add(player_position, Vector2Scale(aim_direction, 20.0f) );
 }
 
-Vector2 compute_muzzle_position(const Vector2 gun_position, const Vector2 aim_direction)
+Vector2 compute_muzzle_position(const Vector2 gun_position, const Vector2 aim_direction, const float length_of_gun)
 {
-   return Vector2Add(gun_position, Vector2Scale(aim_direction, 5.0f));
+   return Vector2Add(gun_position, Vector2Scale(aim_direction, length_of_gun));
 }
 

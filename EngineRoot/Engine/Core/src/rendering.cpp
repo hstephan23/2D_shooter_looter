@@ -1,13 +1,13 @@
 #include <span>
 
 #include "raylib.h"
-#include "raymath.h"
 
 #include "rendering.h"
 #include "player.h"
 #include "monster.h"
 #include "bullet_system.h"
 
+/** TODO - break this up? */
 void render(
     const std::span<Bullet> bullets,
     const std::span<Monster> monsters,
@@ -28,7 +28,7 @@ void render(
         if (bullet.active) DrawCircleV(bullet.position, 3, GREEN);
 
     DrawText(TextFormat("Lives: "), 10, 35, 20, BLACK);
-    for (int i = 0; i < player.health; ++i) DrawCircle(20 + i * 25, 70, 10, RED);
+    for (int i = 0; i < player.hearts; ++i) DrawCircle(20 + i * 25, 70, 10, RED);
 
     constexpr float dash_cooldown_max = 2.0f;
     constexpr int dash_bar_width = 100;
@@ -43,7 +43,6 @@ void render(
     DrawText(TextFormat("Bullets Remaining: %d", count_active_bullets(bullets, MAX_BULLETS)), 10, 85, 20, BLACK);
     for (const auto & monster: monsters)
     {
-        // TODO: make this look nicer?
         switch (monster.type)
         {
             case MonsterType::Grunt:
